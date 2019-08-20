@@ -1,0 +1,58 @@
+import "string"
+
+// use a linker definition file (put the previous listing into that file)
+#pragma link("mega65hyper.ld")
+
+// Some definitions of address and special values that this program uses
+const char* RASTER = 0xd012;
+const char* VIC_MEMORY = 0xd018;
+const char* SCREEN = 0x0400;
+const char* BGCOL = 0xd021; 
+const char* COLS = 0xd800;
+const char BLACK = 0;
+const char WHITE = 1;
+
+
+char[] MASSAGE = "checkpoint2.1 by bada0026";
+void main() {
+
+*VIC_MEMORY = 0x14;
+
+memset(SCREEN,' ', 40*25);
+
+memset(COLS, WHITE, 40*25);
+char* sc = SCREEN+40;
+char*msg = MASSAGE;
+while(*msg) {
+*sc++ = *msg++;
+}
+while(true) {
+if(*RASTER==54 || *RASTER==66) {
+*BGCOL = WHITE;
+} else{
+*BGCOL = BLACK;
+}
+}
+}
+void syscall1() {
+*(SCREEN+79) = ')';
+}
+
+void syscall2() {
+*(SCREEN+78) = '(';
+}
+#pragma data_seg(Syscall)
+struct SysCall {
+char xjmp;
+void()* syscall;
+char xnop;
+};
+const char JMP = 0x4c;
+const char NOP = 0xea;
+export struct SysCall[] SYSCALLS_RESET = {
+{JMP, &syscall1, NOP},
+{JMP, &syscall2, NOP}
+};
+export align(0x100) struct SysCall[] SYSCALL_RESET = {
+{JMP, &main,NOP}
+};
