@@ -13,7 +13,7 @@ const char BLACK = 0;
 const char WHITE = 1;
 
 
-char[] MASSAGE = "checkpoint2.3 by bada0026";
+char[] MASSAGE = "checkpoint2.3 by bada0026";				
 void main() {
 
 *VIC_MEMORY = 0x14;
