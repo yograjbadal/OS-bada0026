@@ -14,7 +14,10 @@ const char WHITE = 1;
 
 
 char[] MASSAGE = "checkpoint2.3 by bada0026";
-void main() {
+
+void main(){
+}
+void RESET() {
 
 *VIC_MEMORY = 0x14;
 
@@ -34,10 +37,7 @@ if(*RASTER==54 || *RASTER==66) {
 }
 }
 }
-void exit_hypervisor()
-{
-*$D67F = $01;
-}
+
 void syscall1() {
 *(SCREEN+79) = ')';
 }
@@ -231,6 +231,35 @@ exit_hypervisor();
 void syscall64() {
 exit_hypervisor();
 }
+
+void CPUKIL(){
+exit_hypervisor();
+}
+void RESERVED(){
+exit_hypervisor();
+}
+void VF011RD(){
+exit_hypervisor();
+}
+void VF011WR(){
+exit_hypervisor();
+}
+void ALTTABKEY(){
+exit_hypervisor();
+}
+void RESTOREKEY(){
+exit_hypervisor();
+}
+void PAGFAULT(){
+exit_hypervisor();
+}
+void undefined_trap(){
+exit_hypervisor();
+}
+void exit_hypervisor(){
+*(unsigned char *)$D67F = $01;
+}
+
 #pragma data_seg(Syscall)
 struct SysCall {
 char xjmp;
@@ -305,13 +334,13 @@ export struct SysCall[] SYSCALLS = {
 {JMP, &syscall63, NOP},
 {JMP, &syscall64, NOP}
 };
-export align(0x100) struct SysCall[] SYSCALL TRAPS = {
-{JMP, RESET,NOP},
-{JMP, CPUKIL,NOP},
-{JMP, VF011RD,NOP},
-{JMP, VF011WR,NOP},
-{JMP, ALTTABKEY,NOP},
-{JMP, RESTOREKEY,NOP},
+export align(0x100) struct SysCall[] SYSCALL_TRAPS = {
+{JMP, &RESET, NOP},
+{JMP, &CPUKIL, NOP},
+{JMP, &VF011RD, NOP},
+{JMP, &VF011WR, NOP},
+{JMP, &ALTTABKEY, NOP},
+{JMP, &RESTOREKEY, NOP},
 {JMP, &undefined_trap, NOP},
 {JMP, &undefined_trap, NOP},
 {JMP, &undefined_trap, NOP},
