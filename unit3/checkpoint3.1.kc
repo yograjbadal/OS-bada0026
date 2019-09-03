@@ -19,10 +19,10 @@ char[] MESSAGE1 = "testing hardware";
 
 void main(){
 }
-unsigned char*current_screen_line = $0400;
+unsigned char *current_screen_line = $0400;
 unsigned char current_screen_x = 0;
 
-void print_to_screen(char*message){
+void print_to_screen(char *message){
 char* sc = current_screen_line + current_screen_x;
 while(*message){
 *sc++=*message++;
