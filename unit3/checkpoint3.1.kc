@@ -26,6 +26,7 @@ void print_to_screen(char *message){
 char* sc = current_screen_line + current_screen_x;
 while(*message){
 *sc++=*message++;
+current_screen_x++;
 }
 }
 void print_newline(){

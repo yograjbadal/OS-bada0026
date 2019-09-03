@@ -120,6 +120,7 @@ print_to_screen: {
     sta.z sc
     lda.z current_screen_line_6+1
     sta.z sc+1
+    ldx #0
   b1:
     ldy #0
     lda (message),y
@@ -138,6 +139,7 @@ print_to_screen: {
     bne !+
     inc.z message+1
   !:
+    inx
     jmp b1
 }
 // Copies the character c (an unsigned char) to the first num characters of the object pointed to by the argument str.
