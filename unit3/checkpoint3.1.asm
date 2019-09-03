@@ -11,6 +11,8 @@
   .const JMP = $4c
   .const NOP = $ea
   .label current_screen_line = 2
+  .label current_screen_line_6 = 4
+  .label current_screen_line_19 = 4
 .segment Code
 main: {
     rts
@@ -78,30 +80,45 @@ RESET: {
     lda #>MESSAGE
     sta.z print_to_screen.message+1
     lda #<$400
+    sta.z current_screen_line_6
+    lda #>$400
+    sta.z current_screen_line_6+1
+    jsr print_to_screen
+    lda #<$400
     sta.z current_screen_line
     lda #>$400
     sta.z current_screen_line+1
-    jsr print_to_screen
     jsr print_newline
+    lda.z current_screen_line
+    sta.z current_screen_line_19
+    lda.z current_screen_line+1
+    sta.z current_screen_line_19+1
     lda #<MESSAGE1
     sta.z print_to_screen.message
     lda #>MESSAGE1
     sta.z print_to_screen.message+1
-    lda #<$400+$28
-    sta.z current_screen_line
-    lda #>$400+$28
-    sta.z current_screen_line+1
     jsr print_to_screen
+    jsr print_newline
     jsr exit_hypervisor
     rts
 }
-// print_to_screen(byte* zeropage(4) message)
+print_newline: {
+    lda #$28
+    clc
+    adc.z current_screen_line
+    sta.z current_screen_line
+    bcc !+
+    inc.z current_screen_line+1
+  !:
+    rts
+}
+// print_to_screen(byte* zeropage(6) message)
 print_to_screen: {
-    .label sc = 6
-    .label message = 4
-    lda.z current_screen_line
+    .label sc = 8
+    .label message = 6
+    lda.z current_screen_line_6
     sta.z sc
-    lda.z current_screen_line+1
+    lda.z current_screen_line_6+1
     sta.z sc+1
   b1:
     ldy #0
@@ -123,16 +140,13 @@ print_to_screen: {
   !:
     jmp b1
 }
-print_newline: {
-    rts
-}
 // Copies the character c (an unsigned char) to the first num characters of the object pointed to by the argument str.
-// memset(void* zeropage(6) str, byte register(X) c, word zeropage(4) num)
+// memset(void* zeropage(8) str, byte register(X) c, word zeropage(6) num)
 memset: {
-    .label end = 4
-    .label dst = 6
-    .label num = 4
-    .label str = 6
+    .label end = 6
+    .label dst = 8
+    .label num = 6
+    .label str = 8
     lda.z num
     bne !+
     lda.z num+1
