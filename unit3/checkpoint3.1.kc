@@ -235,6 +235,7 @@ memset(COLS, WHITE, 40*25);
 print_to_screen(MESSAGE);
 print_newline();
 print_to_screen(MESSAGE1);
+print_newline();
 exit_hypervisor();
 }
 
