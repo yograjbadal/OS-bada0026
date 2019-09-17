@@ -11,6 +11,7 @@ const char* BGCOL = 0xd021;
 const char* COLS = 0xd800;
 const char BLACK = 0;
 const char WHITE = 1;
+const char* DEVICE_START = 0xd000;
 
 char[] MESSAGE = "operating system starting";
 char[] MESSAGE1 = "testing hardware";
@@ -60,19 +61,19 @@ print_newline();
 }
 
 void detect_devices(){
-unsigned short address;
-char result = '0';
-for(int i =1; i < 4081; i+= 16){
-address = (unsigned short)i;
+	unsigned short address;
+	char result = '0';
+	for(int i =1; i < 4081; i+= 16){
+		address = (unsigned short)i;
 
-if(result !='1' ) result = detect_vicii(address);
+		if(result !='1' ){result = detect_vicii(address);}
+	}
+	if(result == '2'){
+		print_to_screen("no device found");
+		print_newline();
+	}
 }
-if(result == '2'){
-print_to_screen("no device found");
-print_newline();
-}
-
-char detect_vicii(undesigned short address){
+char detect_vicii(unsigned short address){
 volatile unsigned char* p;
 unsigned char c1,c2;
 p = DEVICE_START - 1;
@@ -107,6 +108,10 @@ print_newline();
 result = '1';
 }
 else{
+result = '2';
+}
+}
+else {
 result = '2';
 }
 return result;

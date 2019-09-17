@@ -20,8 +20,8 @@ al C:8383 .syscall28
 al C:829a .print_to_screen
 al C:8 .str
 al C:83eb .syscall2
-al C:840d .MESSAGE1
-al C:83ef .syscall1
+al C:8411 .MESSAGE1
+al C:83f1 .syscall1
 al C:839f .syscall21
 al C:839b .syscall22
 al C:83cf .syscall9
@@ -39,7 +39,7 @@ al C:83e7 .syscall3
 al C:835b .syscall38
 al C:8357 .syscall39
 al C:8 .sc
-al C:83f3 .MESSAGE
+al C:83f7 .MESSAGE
 al C:821b .VF011RD
 al C:8000 .SYSCALLS
 al C:8373 .syscall32

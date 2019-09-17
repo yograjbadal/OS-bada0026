@@ -1,4 +1,4 @@
-  .file [name="checkpoint3.1.bin", type="bin", segments="XMega65Bin"]
+  .file [name="checkpoint3.3.bin", type="bin", segments="XMega65Bin"]
 .segmentdef XMega65Bin [segments="Syscall, Code, Data, Stack, Zeropage"]
 .segmentdef Syscall [start=$8000, max=$81ff]
 .segmentdef Code [start=$8200, min=$8200, max=$bdff]
@@ -82,14 +82,14 @@ RESET: {
     sta.z print_to_screen.message
     lda #>MESSAGE
     sta.z print_to_screen.message+1
-    lda #<SCREEN
+    lda #<$400
     sta.z current_screen_line_6
-    lda #>SCREEN
+    lda #>$400
     sta.z current_screen_line_6+1
     jsr print_to_screen
-    lda #<SCREEN
+    lda #<$400
     sta.z current_screen_line
-    lda #>SCREEN
+    lda #>$400
     sta.z current_screen_line+1
     jsr print_newline
     lda.z current_screen_line
@@ -432,11 +432,13 @@ syscall3: {
     rts
 }
 syscall2: {
-    jsr exit_hypervisor
+    lda #'('
+    sta SCREEN+$4e
     rts
 }
 syscall1: {
-    jsr exit_hypervisor
+    lda #')'
+    sta SCREEN+$4f
     rts
 }
 .segment Data
