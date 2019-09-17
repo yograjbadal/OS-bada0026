@@ -72,6 +72,7 @@ void detect_devices(){
 		print_to_screen("no device found");
 		print_newline();
 	}
+	print_to_screen("finished probing devices");
 }
 char detect_vicii(unsigned short address){
 volatile unsigned char* p;
