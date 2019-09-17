@@ -40,7 +40,7 @@ print_hex((unsigned short)p);
 print_newline();
 err = 1;
 break;
-
+}
 chara++;
 }
 if(err==1){
@@ -276,7 +276,7 @@ void syscall64() {
 exit_hypervisor();
 }
 void RESET() {
-VIC_MEMORY = 0x14;
+*VIC_MEMORY = 0x14;
 
 memset(SCREEN,' ',40*25);
 memset(COLS, WHITE, 40*25);
