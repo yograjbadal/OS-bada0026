@@ -19,7 +19,7 @@ char[] MESSAGE1 = "testing hardware";
 
 void main(){
 }
-unsigned char *current_screen_line = $0400;
+unsigned char *current_screen_line = SCREEN;
 unsigned char current_screen_x = 0;
 
 void print_to_screen(char *message){
@@ -30,16 +30,16 @@ current_screen_x++;
 }
 }
 void print_newline(){
-current_screen_line = current_screen_line + $28;
+current_screen_line = current_screen_line +40 ;
 current_screen_x = 0;
 }
 
 void syscall1() {
-*(SCREEN+79) = ')';
+exit_hypervisor();
 }
 
 void syscall2() {
-*(SCREEN+78) = '(';
+exit_hypervisor();
 }
 void syscall3() {
 exit_hypervisor();
@@ -228,16 +228,16 @@ void syscall64() {
 exit_hypervisor();
 }
 void RESET() {
-VIC_MEMORY = 0x14;
+	*VIC_MEMORY = 0x14;
 
-memset(SCREEN,' ',40*25);
-memset(COLS, WHITE, 40*25);
+	memset(SCREEN,' ',40*25);
+	memset(COLS, WHITE, 40*25);
 
-print_to_screen(MESSAGE);
-print_newline();
-print_to_screen(MESSAGE1);
-print_newline();
-exit_hypervisor();
+	print_to_screen(MESSAGE);
+	print_newline();
+	print_to_screen(MESSAGE1);
+	print_newline();
+	exit_hypervisor();
 }
 
 void CPUKIL(){
