@@ -62,7 +62,7 @@ void print_hex(unsigned short value){
 char[5] hex;
 unsigned char i;
 for(i=0; i<4; i++){
-if (value<0xa000) hex[i]='0'+ (char)(value>>12);
+if (value<0xa000) hex[i]='0'+(char)(value>>12);
 else hex[i]=(char)(value>>12)-9;
 value<<=4;
 }
