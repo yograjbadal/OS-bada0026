@@ -12,20 +12,18 @@ const char* COLS = 0xd800;
 const char BLACK = 0;
 const char WHITE = 1;
 
-
 char[] MESSAGE = "operating system starting";
 char[] MESSAGE1 = "testing hardware";
 
 unsigned short mem_start = $0800;
 unsigned short mem_end = $0800;
 
-
 unsigned char *current_screen_line = $0400;
 unsigned char current_screen_x = 0;
 
 void main(){
 }
-void test memory(){
+void test_memory(){
 char *sc = mem_start;
 char chara = $00;
 volatile unsigned char *p;
@@ -36,7 +34,7 @@ chara = $00;
 for(int j = 0; j<255; j++){
 *p = chara;
 
-if(*p! = chara){
+if(*p!=chara){
 print_to_screen("the memory error at $");
 print_hex((unsigned short)p);
 print_newline();
