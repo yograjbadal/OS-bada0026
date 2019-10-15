@@ -31,10 +31,10 @@ struct process_descriptor_block {
     unsigned char process_id;
 
   // Current state of the process
-  
+  unsigned char process_state;
 
   // Human readable name of the process
-    char* process_name;
+    char *process_name;
   
   // Where this process is stored when not running
   // i.e., where in the $20000-$5FFFF memory range the
@@ -44,7 +44,7 @@ struct process_descriptor_block {
   unsigned long storage_end_address; 
   // Stored registers and related machine state for this
   // process (for the $D640-$D67E machine state registers)
-  unsigned char* stored_state;
+  unsigned char *stored_state;
   
 };
 
@@ -335,19 +335,26 @@ void RESET() {
 
 	memset(SCREEN,' ',40*25);
 	memset(COLS, WHITE, 40*25);
-char* sc = SCREEN+40;
-char* msg = MESSAGE;
-while(*msg){
-*sc++=*msg++;
-}
+	char* sc = SCREEN+40;
+	char* msg = MESSAGE;
+	while(*msg){
+		*sc++=*msg++;
+	}
 
-    current_screen_line = SCREEN;
-    print_newline();
-    print_newline();
-    print_newline();
+    	current_screen_line = SCREEN;
+   	print_newline();
+    	print_newline();
+    	print_newline();
 
-    describe_pdb(0);
-    exit_hypervisor;
+    	describe_pdb(0);
+	while(true) {
+		if(RASTER==54 || *RASTER==66) {
+			*BGCOL = WHITE;
+		} else {
+			*BGCOL = BLUE;
+		}
+	}
+    	//exit_hypervisor;
 }
 void CPUKIL(){
 exit_hypervisor();
