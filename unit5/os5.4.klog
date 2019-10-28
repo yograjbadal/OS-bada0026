@@ -1,0 +1,29 @@
+parsing
+flex pass 1
+flex pass 2
+flex pass 3
+Output pass
+Writing prg file: os5.4.bin
+Writing prg file: /home/student/repo/unit5/os5.4.prg
+
+Memory Map
+----------
+Default-segment:
+  $2000-$201b Default
+
+XMega65Bin-segment:
+
+Syscall-segment:
+  $8000-$81c7 Syscall
+
+Code-segment:
+  $8200-$8c2c Code
+
+Data-segment:
+  $8c2d-$8c63 Data
+
+Stack-segment:
+
+Zeropage-segment:
+
+Writing Vice symbol file: /home/student/repo/unit5/os5.4.vs
